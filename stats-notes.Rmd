@@ -1,0 +1,56 @@
+---
+title: "Heart-Disease-data-analysis"
+author: "Aldona Swirad"
+date: "2024-02-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Wczytywanie danych z csv
+```{r echo=T}
+#dane <- read.csv("C:\\Users\\Aldona\\Documents\\GitHub\\Heart-Disease-data-analysis\\heart_2020_cleaned.csv")
+dane <- read.csv("heart_2020_cleaned.csv")
+head(dane)
+```
+
+# Wykresy
+```{r echo = T}
+#ilość kolumn
+ncol(dane)
+#ilość wierszy
+nrow(dane)
+#18x319795
+#duża ilość danych
+#barplot(height = dane$BMI, names.arg = dane$HeartDisease)
+#title(ylab = "BMI", xlab = "Czy chory?", line = 2.5)
+```
+
+# Różne współczynniki statystyczne
+Pod uwagę weźmiemy BMI, a występowanie chorób kardiologicznych.
+```{r}
+cardio <- dane[, c(1, 2)]
+# były chore
+cardio_yes <- cardio[cardio$HeartDisease == "Yes", ]
+# nie były chore
+cardio_no <- cardio[cardio$HeartDisease == "No", ]
+
+```
+```{r}
+plot(cardio_yes)
+
+```
+
+
+
+
+
+
+
+
+
+
+
