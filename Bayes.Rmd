@@ -1,0 +1,92 @@
+---
+title: "Bayes"
+author: "Aldona Swirad"
+date: "2024-03-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Dane
+
+Zestaw danych zawiera 18 zmiennych (9 wartości logicznych, 5 ciągów znaków i 4 liczby dziesiętne). W projektach związanych z uczeniem maszynowym "HeartDisease" może być wykorzystywane jako zmienna objaśniająca, ale należy zauważyć, że klasy są silnie niezrównoważone.
+
+Dane pobrane zostały z kaggle:  https://www.kaggle.com/code/georgyzubkov/heart-disease-exploratory-data-analysis/input.
+Dane zawierają takie cechy jak:
+
+## Opis cech:
+
+ - **HeartDisease** - czy badany ma chorobę serca.
+
+ - **BMI** - wartość, która pozwala ocenić stopień zgodności masy ciała osoby z jej wzrostem, a tym samym pośrednio ocenić, czy masa jest niewystarczająca, normalna czy nadmierna. Jest to ważne przy ustalaniu wskazań do konieczności leczenia.
+
+ - **Smoking** - palenie jest głównym czynnikiem ryzyka chorób sercowo-naczyniowych. Po inhalacji dymu z papierosa reakcja układu sercowo-naczyniowego następuje natychmiastowo: w ciągu jednej minuty tempo akcji serca zaczyna wzrastać, zwiększając się o 30% w ciągu dziesięciu minut palenia. Zły nawyk również podnosi ciśnienie krwi, poziom fibrinogenu i płytek krwi, co zwiększa prawdopodobieństwo powstawania skrzepów.
+
+ - **AlcoholDrinking** - alkohol powoduje nie tylko tymczasowe zaburzenia w funkcjonowaniu serca, ale także trwałe. Ból serca po alkoholu to nie jedyny problem zdrowotny związany z jego spożyciem.
+
+ - **Stroke** - Udar niedokrwienny występuje 4 razy częściej niż krwotoczny. Jedną z głównych przyczyn tego cierpienia są choroby serca, które upośledzają jego funkcjonowanie, w wyniku czego przepływ krwi w tętnicach jest zakłócony, a dopływ krwi do mózgu zmniejszony. Inną przyczyną udaru w chorobach serca jest zakrzepica, gdy powstają skrzepy w jamach serca (najczęściej przy niewydolności serca) - skrzepy krwi.
+
+ - **PhysicalHealth** - ile dni w miesiącu badany czuł się zle pod kątem zdrowia fizycznego.
+
+ - **MentalHealth** - ile dni w miesiącu badany czuł się zle pod kątem zdrowia psychicznego.
+
+ - **DiffWalking** - trudność w wchodzeniu po schodach.
+
+ - **Sex** - płeć osoby.
+
+ - **AgeCategory** - kategoria wiekowa badanych.
+
+ - **Race** - rasa.
+
+ - **Diabetic** - cukrzyca.
+
+ - **PhysicalActivity** - badano, którzy zgłosili wykonywanie aktywności fizycznej lub ćwiczeń w ciągu ostatnich 30 dni oprócz swojej regularnej pracy.
+
+ - **GenHealth** - samopoczucie.
+
+ - **SleepTime** - liczba godzin snu.
+
+ - **Asthma** - astma.
+
+ - **KidneyDisease** - choroba nerek.
+
+ - **Skin Cancer** - rak skóry.
+
+
+# Wczytywanie danych z csv
+```{r echo=FALSE, results='asis'}
+#dane <- read.csv("C:\\Users\\Aldona\\Documents\\GitHub\\Heart-Disease-data-analysis\\heart_2020_cleaned.csv")
+dane <- read.csv("heart_2020_cleaned.csv")
+knitr::kable(head(dane[,c(1:7)]), "pipe", align = "ccccc")
+knitr::kable(head(dane[,c(7:15)]), "pipe", align = "ccccc")
+```
+
+# Redukcja ilości danych atrybutowych do (5-7)
+```{r pressure, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("ktore.png")
+```
+Pod uwage wzięłam tylko te cechy, które mają zazwyczaj największy wpły na występowanie chorób kardiologicznych.
+```{r}
+# usuwam SkinCancer
+dane <- dane[, -18]
+# usuwam KidneyDisease
+dane <- dane[, -17]
+#usuwam Asthma
+dane <- dane[, -16]
+#usuwam SleepTime
+dane <- dane[, -15]
+#usuwam GenHealth
+dane <- dane[, -14]
+#usuwam Race
+dane <- dane[, -11]
+#usuwam Sex
+dane <- dane[, -9]
+#usuwam DiffWalking
+dane <- dane[, -8]
+#usuwam MentalHealth
+dane <- dane[, -7]
+#usuwam PhisicalHealth
+dane <- dane[, -6]
+knitr::kable(head(dane), "pipe", align = "ccccc")
+```
