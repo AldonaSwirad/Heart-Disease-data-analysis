@@ -2,7 +2,11 @@
 title: "Bayes"
 author: "Aldona Swirad"
 date: "2024-03-11"
-output: html_document
+output: 
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
@@ -52,14 +56,25 @@ Dane zawierają takie cechy jak:
  - **KidneyDisease** - choroba nerek.
 
  - **Skin Cancer** - rak skóry.
-
+ 
+# Instalacja i wszystywanie potrzebnych bibliotek w środowisku R
+```{r echo=FALSE, results='asis'}
+#install.packages("readxl")
+library(readxl)
+#install.packages("Rgraphviz")
+#library(Rgraphviz)
+#install.packages("bnlearn")
+#library(bnlearn)
+#install.packages("gRain")
+#library(gRain)
+```
 
 # Wczytywanie danych z csv
 ```{r echo=FALSE, results='asis'}
-#dane <- read.csv("C:\\Users\\Aldona\\Documents\\GitHub\\Heart-Disease-data-analysis\\heart_2020_cleaned.csv")
-dane <- read.csv("heart_2020_cleaned.csv")
-knitr::kable(head(dane[,c(1:7)]), "pipe", align = "ccccc")
-knitr::kable(head(dane[,c(7:15)]), "pipe", align = "ccccc")
+#cardio <- read.csv("C:\\Users\\Aldona\\Documents\\GitHub\\Heart-Disease-data-analysis\\heart_2020_cleaned.csv")
+cardio <- read.csv("heart_2020_cleaned.csv")
+knitr::kable(head(cardio[,c(1:7)]), "pipe", align = "ccccc")
+knitr::kable(head(cardio[,c(7:15)]), "pipe", align = "ccccc")
 ```
 
 # Redukcja ilości danych atrybutowych do (5-7)
@@ -69,24 +84,81 @@ knitr::include_graphics("ktore.png")
 Pod uwage wzięłam tylko te cechy, które mają zazwyczaj największy wpły na występowanie chorób kardiologicznych.
 ```{r}
 # usuwam SkinCancer
-dane <- dane[, -18]
+cardio <- cardio[, -18]
 # usuwam KidneyDisease
-dane <- dane[, -17]
+cardio <- cardio[, -17]
 #usuwam Asthma
-dane <- dane[, -16]
+cardio <- cardio[, -16]
 #usuwam SleepTime
-dane <- dane[, -15]
+cardio <- cardio[, -15]
 #usuwam GenHealth
-dane <- dane[, -14]
+cardio <- cardio[, -14]
 #usuwam Race
-dane <- dane[, -11]
+cardio <- cardio[, -11]
 #usuwam Sex
-dane <- dane[, -9]
+cardio <- cardio[, -9]
 #usuwam DiffWalking
-dane <- dane[, -8]
+cardio <- cardio[, -8]
 #usuwam MentalHealth
-dane <- dane[, -7]
+cardio <- cardio[, -7]
 #usuwam PhisicalHealth
-dane <- dane[, -6]
-knitr::kable(head(dane), "pipe", align = "ccccc")
+cardio <- cardio[, -6]
+knitr::kable(head(cardio), "pipe", align = "ccccc")
 ```
+
+# Grupowanie danych
+Wiek osób badanych poddany został grupowaniu na etapie zbierania danych, więc nie wymagał dodatkowego grupowania. Grupowaniu poddany został wskaźniek BMI, zgodnie z poniższym rysunkiem. 
+
+```{r , echo=FALSE, out.width = '100%'}
+knitr::include_graphics("BMI.png")
+```
+
+```{r, echo=TRUE}
+min_BMI <- min(cardio$BMI)
+max_BMI <- max(cardio$BMI)
+
+BMI_groups <- cut(cardio$BMI,
+                  breaks = c(min_BMI, 18.5, 25, 30, max_BMI),
+                  labels = c("Niedowaga", "Norma", "Nadwaga", "Otyłość")
+)
+BMI_groups <- droplevels(BMI_groups)
+cardio$BMI <- BMI_groups
+cardio$BMI <- as.factor(cardio$BMI)
+
+head(BMI_groups)
+```
+
+```{r}
+plot(-x-1)
+```
+
+```{R}
+plot(x+1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
