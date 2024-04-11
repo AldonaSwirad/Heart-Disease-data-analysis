@@ -155,3 +155,8 @@ warunek <- setEvidence(junction,nodes=c("covid"),states=c("true"))
 querygrain(warunek, nodes = c("smoker","hospital"),type="joint")
 
 querygrain(warunek, nodes = c("smoker","hospital"),type="marginal")
+
+
+
+
+################################ LAB3 ################################
