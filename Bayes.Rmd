@@ -113,30 +113,10 @@ Wiek osób badanych poddany został grupowaniu na etapie zbierania danych, więc
 knitr::include_graphics("BMI.png")
 ```
 
-```{r, echo=TRUE}
-min_BMI <- min(cardio$BMI)
-max_BMI <- max(cardio$BMI)
-
-BMI_groups <- cut(cardio$BMI,
-                  breaks = c(min_BMI, 18.5, 25, 30, max_BMI),
-                  labels = c("Niedowaga", "Norma", "Nadwaga", "Otyłość")
-)
-BMI_groups <- droplevels(BMI_groups)
-cardio$BMI <- BMI_groups
-cardio$BMI <- as.factor(cardio$BMI)
-
-head(BMI_groups)
-```
-
-```{r}
-plot(-x-1)
-```
-
-```{R}
-plot(x+1)
-```
 
 
+
+\[ P(Smoking = \text{Yes} | HeartDisease = \text{Yes}) = \frac{P(HeartDisease = \text{Yes} | Smoking = \text{Yes}) \times P(Smoking = \text{Yes})}{P(HeartDisease = \text{Yes})} \]
 
 
 
